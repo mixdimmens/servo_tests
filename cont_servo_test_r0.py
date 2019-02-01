@@ -7,6 +7,7 @@ import RPi.GPIO as GPIO
 print('hiya!')
 print('lets get this started. perftcount: {}'.format(time.perf_counter()))
 
+"""
 # converts angles to input value for servo object input:
 def servo_ang(angle):
     # full range for servo input : 2.5 - 12.5
@@ -21,31 +22,37 @@ def servo_ang(angle):
     else:
         print('angle out of range!')
 #print(servo_ang(10))
-
+"""
 
 pin = 8 # only pwm hardware pin
+
+rest = 3.2 # minimum value - is supposed to be 2.5
+# but i think the servo we have is shorting :D
+pole = 12.5 # maximum value
+
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(pin, GPIO.OUT, initial = 0)
 freq = 50 # in hz
 servo = GPIO.PWM( pin , freq)
-servo.start(servo_ang(90))
+servo.start(rest)
 
 print('loop starting at: {}'.format(time.perf_counter()))
-count = 1
+count = True
 try:
-    while count < 5:
-        print(count)
+    while count is True:
+        #count += 1
+        #print(count)
 
-        servo.ChangeDutyCycle(servo_ang(0))
+        servo.ChangeDutyCycle(pole)
         time.sleep(1)
 
-        servo.ChangeDutyCycle(servo_ang(100))
+        servo.ChangeDutyCycle(rest)
         time.sleep(2)
 
         #servo.ChangeDutyCycle(servo_ang(0))
         #time.sleep(2)
-
-        count += 1
+        count = False
+        
 
 except KeyboardInterrupt:
     servo.stop()
