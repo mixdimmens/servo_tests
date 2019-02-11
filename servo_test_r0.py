@@ -33,10 +33,10 @@ servo.start(servo_ang(90))
 print('loop starting at: {}'.format(time.perf_counter()))
 count = 1
 try:
-    while count < 5:
+    while count < 3:
         print(count)
 
-        servo.ChangeDutyCycle(servo_ang(0))
+        servo.ChangeDutyCycle(servo_ang(20))
         time.sleep(1)
 
         servo.ChangeDutyCycle(servo_ang(100))
