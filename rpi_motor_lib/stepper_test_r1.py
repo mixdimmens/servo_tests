@@ -8,15 +8,15 @@
 import sys
 import time
 import RPi.GPIO as GPIO
-from RpiMotorLib import RpiMotorLib
-#import RpiMotorLib
+#from RpiMotorLib import RpiMotorLib
+import RpiMotorLib
 
 
 ## how to set up a motor instance ##
 
-ms1 = 1 # gpio pin to ms1 on A4988
-ms2 = 2 # gpio pin to ms2 on A4988
-ms3 = 3 # gpio pin to ms3 on A4988
+ms1 = 10 # gpio pin to ms1 on A4988
+ms2 = 9 # gpio pin to ms2 on A4988
+ms3 = 11 # gpio pin to ms3 on A4988
 direction = 4 # connect to direction pin on A4988
 step = 5 # connect to step pin on A4988
 step_control_pins = (ms1, ms2, ms3) # needs a list (or array apparently) to put into 
