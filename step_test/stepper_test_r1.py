@@ -16,11 +16,11 @@ import RpiMotorLib
 ## how to set up a motor instance ##
 
 # fix pin numbers!
-ms1 = 18 # gpio pin to ms1 on A4988
-ms2 = 23 # gpio pin to ms2 on A4988
-ms3 = 24 # gpio pin to ms3 on A4988
-direction = 25 # connect to direction pin on A4988
-step = 8 # connect to step pin on A4988
+ms1 = 11 # gpio pin to ms1 on A4988
+ms2 = 9 # gpio pin to ms2 on A4988
+ms3 = 10 # gpio pin to ms3 on A4988
+direction = 26 # connect to direction pin on A4988
+step = 19 # connect to step pin on A4988
 step_control_pins = (ms1, ms2, ms3) # needs a list (or array apparently) to put into 
 # instatiation
 
@@ -32,9 +32,9 @@ motor = RpiMotorLib.A4988Nema(direction, step, step_control_pins, "A4988")
 ## how to make the motor move ##
 print('moving!')
 rev_direction = True # bool value, default is False - true makes it go clockwise
-step_type = 'Half' # string, options are Full, Half, 1/4, 1/8, or 1/16
-steps = int(400 * .75) # int of how many steps to take in command, default is 1 rev
-step_delay = .05 # float value  of pause inbetween steps (in seconds) - .05 is default (and 
+step_type = '1/8' # string, options are Full, Half, 1/4, 1/8, or 1/16
+steps = int(200) # int of how many steps to take in command, default is 1 rev - 1 rev = 200
+step_delay = .001 # float value  of pause inbetween steps (in seconds) - .05 is default (and 
 # sounds reasonable)
 verbose = False # bool value - lib example says it "write[sic] pin action" - prints it?
 initdelay = .05 # the time the program waits after initializing the GPIO pins, but before 
@@ -43,6 +43,7 @@ motor.motor_go(rev_direction, step_type, steps, step_delay, verbose, initdelay)
 
 time.sleep(1)
 #turn back 270deg
+steps = 150
 rev_direction = False
 print('moving again!')
 motor.motor_go(rev_direction, step_type, steps, step_delay, verbose, initdelay)
@@ -50,7 +51,7 @@ motor.motor_go(rev_direction, step_type, steps, step_delay, verbose, initdelay)
 time.sleep(1)
 print('one more move!')
 # turn back agian 180deg
-motor.motor_go(True, "Half", 200, .05, False, .05)
+motor.motor_go(True, "1/4", 100, .001, False, .05)
 
 
 # clean dem pins, yo!
