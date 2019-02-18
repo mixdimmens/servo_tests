@@ -24,9 +24,6 @@ class StepperAbsPos: # for debugging the class, yo
         self.mode_pins = mode_pins
         self.stepper_position = stepper_position
         self.motor_type = motor_type
-        #self.inner_steps = inner_steps
-        #self.outer_steps = outer_steps
-
 
     ## method golbal zeroes stepper absolute position
     def new_home(self):
@@ -71,101 +68,42 @@ class StepperAbsPos: # for debugging the class, yo
             self.opposing_pole = self.stepper_position - 100
         return self.opposing_pole
 
-    # def inner_outer_steps(self, stepper_position, end_position):
-    #     if self.stepper_position == self.end_position:
-    #         self.direction = True
-    #     elif self.stepper_position > self.end_position:
-    #         inner_steps = self.stepper_position - self.end_position
-    #         outer_steps = (200 - self.stepper_position) +self.end_position
-    #         print('inner steps {}, outer steps {}'.format(inner_steps, outer_steps))
-    #     elif self.end_position > self.stepper_position:
-    #         inner_steps = self.end_position - self.stepper_position
-    #         outer_steps = (200 - self.end_position) + self.stepper_position
-    #         print('inner steps {}, outer steps {}'.format(inner_steps, outer_steps))
-        
-    #     if inner_steps > outer_steps:
-    #         return outer_steps
-    #     else:
-    #         return inner_steps
-
-    def inner_steps(self, stepper_position, end_position):
-        inner_step = 0
-        if self.stepper_position > end_position:
-            inner_step = self.stepper_position - end_position
-            print('inner steps {}'.format(self.inner_steps))
-        elif end_position > self.stepper_position:
-            inner_step = end_position - self.stepper_position
-            print('inner steps {}'.format(self.inner_steps))
-        return inner_step
-
-    def outer_steps(self, stepper_position, end_position):
-        outer_steps = 0
-        if self.stepper_position > end_position:
-            outer_steps = self.stepper_position - end_position
-            print('inner steps {}'.format(self.outer_steps))
-        elif end_position > self.stepper_position:
-            outer_steps = end_position - self.stepper_position
-            print('outer steps {}'.format(self.outer_steps))
-        return outer_steps
-
-    def auto_direction(self, stepper_position, end_position):
-        if self.inner_steps == self.outer_steps:
-            self.direction = True
-        elif self.inner_steps > self.outer_steps:
-            if self.stepper_position > self.end_position:
-                self.direction = True
-            elif self.end_position > self.stepper_position:
-                self.direction = False
-        elif self.outer_steps > self.inner_steps:
-            if self.stepper_position > self.end_position:
-                self.direction = False
-            elif self.end_position > self.stepper_position:
-                self.direction = True
-        return self.direction
-
-    def abs_motor__go(self, end_position, steptype, stepdelay, initdelay):
+    def abs_motor_go(self, end_position, steptype, stepdelay, initdelay):
         self.end_position = end_position
-        if self.outer_steps(self.end_position) == self.inner_steps(self.end_position):
+        inner_steps = 0
+        outer_steps = 0
+
+        if self.stepper_position > end_position:
+            inner_steps = self.stepper_position - self.end_position
+            outer_steps = (200 - self.stepper_position) + self.end_position
+            print('inner steps {}, outer steps {}'.format(inner_steps, outer_steps))
+        elif end_position > self.stepper_position:
+            inner_steps = self.end_position - self.stepper_position
+            outer_steps = (200 - self.end_position) + self.stepper_position
+            print('inner steps {}, outer steps {}'.format(inner_steps, outer_steps))
+
+        if inner_steps == outer_steps:
+            self.direction = True
+        elif inner_steps > outer_steps:
+            if self.stepper_position > self.end_position:
+                self.direction = True
+            elif self.end_position > self.stepper_position:
+                self.direction = False
+        elif outer_steps > inner_steps:
+            if self.stepper_position > self.end_position:
+                self.direction = False
+            elif self.end_position > self.stepper_position:
+                self.direction = True
+
+        print('direction {}'.format(self.direction))
+        if outer_steps == inner_steps:
             pass
-        elif self.outer_steps < self.inner_steps:
+        elif outer_steps < inner_steps:
             # self.motor__go(self.auto_direction, self.outer_steps, steptype, stepdelay, False, initdelay)
-            self.abs_position(self.outer_steps, self.direction)
-        elif self.inner_steps < self.outer_steps:
+            self.abs_position(outer_steps, self.direction)
+        elif inner_steps < outer_steps:
             # self.motor__go(self.auto_direction, self.inner_steps, steptype, stepdelay, False, initdelay)
-            self.abs_position(self.inner_steps, self.direction)
-
-        
-
-    ## figures out the difference between where the motor is and where the motor wants to go.
-    ## two modes, shortest path, and user chosen direction of rotation.
-    # def abs_motor_go(self, end_position, steptype, stepdelay, initdelay):
-    #     self.end_position = end_position
-        
-    #     self.abs_pos_to_home = self.stepper_position
-    #     print('abs pos to home {}'.format(self.abs_pos_to_home))
-    #     self.end_position_to_home = self.end_position - self.stepper_position
-    #     print('end pos to home {}'.format(self.end_position_to_home))
-
-    #     if self.end_position_to_home == 0:
-    #         print('pass!')
-    #         pass
-    #     elif self.abs_pos_to_home > self.end_position_to_home:
-    #         self.direction = True
-    #         print('direction clockwise')
-    #         self.abs_move = self.stepper_position - self.end_position
-    #     elif self.end_position_to_home > self.abs_pos_to_home:
-    #         self.direction = False
-    #         print('direction counterclockwise')
-    #         self.abs_move = abs(self.end_position - self.stepper_position)
-        
-    #     try:
-    #         # self.motor_go(self.auto_direction(self.stepper_position, self.), self.steptype, self.abs_move, self.stepdelay, False, self.initdelay)
-
-    #         print('abs move {}'.format(self.abs_move))
-    #         self.abs_position(self.abs_move, self.direction)
-        
-        # except:
-            # KeyboardInterrupt
+            self.abs_position(inner_steps, self.direction)
 
     def __repr__(self):
         return "abs pos: {}".format(self.stepper_position)
@@ -197,10 +135,17 @@ step_type = 'Half'
 step_delay = .005
 init_delay = .005
 
-# stepper.abs_motor_go(50, step_type, step_delay, init_delay)
-# print(stepper)
-# print('')
+stepper.abs_motor_go(50, step_type, step_delay, init_delay)
+print(stepper)
+print('')
 
+stepper.abs_motor_go(100, step_type, step_delay, init_delay)
+print(stepper)
+print('')
+
+stepper.abs_motor_go(50, step_type, step_delay, init_delay)
+print(stepper)
+print('')
 # stepper.abs_motor_go(70, step_type, step_delay, init_delay)
 # print(stepper)
 
