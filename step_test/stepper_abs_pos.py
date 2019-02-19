@@ -8,9 +8,11 @@
             # 100 ____________|___________ 0
             #                 |\
             #                 | \
-            #                 |  \
+            #       outside   |  \    inside
             #                 |   \
             #                 50   self.stepper_position
+            # clockwise = True
+            # 
 ## * zeroed coordinate coming soon 
 # import RpiMotorLib
 
@@ -68,8 +70,9 @@ class StepperAbsPos: # for debugging the class, yo
             self.opposing_pole = self.stepper_position - 100
         return self.opposing_pole
 
-    def abs_motor_go(self, end_position, steptype, stepdelay, initdelay):
+    def abs_motor_go(self, end_position, steptype, stepdelay, initdelay, extra_revs = 0):
         self.end_position = end_position
+        self.extra_revs = extra_revs
         inner_steps = 0
         outer_steps = 0
 
@@ -95,14 +98,22 @@ class StepperAbsPos: # for debugging the class, yo
             elif self.end_position > self.stepper_position:
                 self.direction = True
 
-        print('direction {}'.format(self.direction))
-        if outer_steps == inner_steps:
+        print('direction {}'.format(self.direction))            
+        if outer_steps == inner_steps and self.extra_revs == 0:
             pass
+        elif outer_steps == inner_steps and self.extra_revs != 0:
+            self.extra_revs = self.extra_revs * 200
+            # self.motor_go(self.direction, self.extra_revs, steptype, stepdelay, False, initdelay)
+            print('moved {} (previous rotation direction)'.format(self.extra_revs))
         elif outer_steps < inner_steps:
-            # self.motor__go(self.auto_direction, self.outer_steps, steptype, stepdelay, False, initdelay)
+            outer_steps += (self.extra_revs * 200)
+            # self.motor_go(self.auto_direction, outer_steps, steptype, stepdelay, False, initdelay)]
+            print('moved {} (outer steps)'.format(outer_steps))
             self.abs_position(outer_steps, self.direction)
         elif inner_steps < outer_steps:
-            # self.motor__go(self.auto_direction, self.inner_steps, steptype, stepdelay, False, initdelay)
+            inner_steps += (self.extra_revs * 200)
+            # self.motor__go(self.auto_direction, inner_steps, steptype, stepdelay, False, initdelay)
+            print('moved {} (inner steps)'.format(inner_steps))
             self.abs_position(inner_steps, self.direction)
 
     def __repr__(self):
@@ -111,13 +122,13 @@ class StepperAbsPos: # for debugging the class, yo
 
 ## demo instance, dummy: ##
 
-#fill in the blanks:
-direction_pin = 19
-step_pin = 26
-mode_pins = (25,26,27)
-stepper_position = 0
+# #fill in the blanks:
+# direction_pin = 19
+# step_pin = 26
+# mode_pins = (25,26,27)
+# stepper_position = 0
 
-stepper = StepperAbsPos(direction_pin, step_pin, mode_pins, stepper_position, "A4988")
+# stepper = StepperAbsPos(direction_pin, step_pin, mode_pins, stepper_position, "A4988")
 
 # #test absolute position change
 # stepper.abs_position(635, False)
@@ -131,23 +142,46 @@ stepper = StepperAbsPos(direction_pin, step_pin, mode_pins, stepper_position, "A
 
 # print(stepper)
 
-step_type = 'Half'
-step_delay = .005
-init_delay = .005
+# step_type = 'Half'
+# step_delay = .005
+# init_delay = .005
 
-stepper.abs_motor_go(50, step_type, step_delay, init_delay)
-print(stepper)
-print('')
+# print(1)
+# stepper.abs_motor_go(50, step_type, step_delay, init_delay)
+# print(stepper)
+# print('')
 
-stepper.abs_motor_go(100, step_type, step_delay, init_delay)
-print(stepper)
-print('')
+# print(2)
+# stepper.abs_motor_go(100, step_type, step_delay, init_delay)
+# print(stepper)
+# print('')
 
-stepper.abs_motor_go(50, step_type, step_delay, init_delay)
-print(stepper)
-print('')
+# print(3)
+# stepper.abs_motor_go(50, step_type, step_delay, init_delay)
+# print(stepper)
+# print('')
+
+# print(4)
 # stepper.abs_motor_go(70, step_type, step_delay, init_delay)
 # print(stepper)
+# print('')
 
-# print(stepper.opposite_pole(stepper_position))
+# print(5)
+# stepper.abs_motor_go(180, step_type, step_delay, init_delay)
+# print(stepper)
+# print('')
 
+# print(6)
+# stepper.abs_motor_go(5, step_type, step_delay, init_delay)
+# print(stepper)
+# print('')
+
+# print(7)
+# stepper.abs_motor_go(0, step_type, step_delay, init_delay)
+# print(stepper)
+# print('')
+
+# print(8)
+# stepper.abs_motor_go(100, step_type, step_delay, init_delay, 1)
+# print(stepper)
+# print('')
