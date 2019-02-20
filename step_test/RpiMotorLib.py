@@ -190,6 +190,7 @@ class A4988Nema(object):
         self.mode_pins = mode_pins
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
+        print(type(self.direction_pin))
 
     def resolution_set(self, steptype):
         """ method to calculate step resolution
@@ -220,8 +221,7 @@ class A4988Nema(object):
 
         GPIO.output(self.mode_pins, resolution[steptype])
 
-    def motor_go(self, clockwise=False, steptype="Full",
-                 steps=200, stepdelay=.005, verbose=False, initdelay=.05):
+    def motor_go(self, clockwise=False, steptype="Full", steps=200, stepdelay=.005, verbose=False, initdelay=.05):
         """ motor_go,  moves stepper motor based on 6 inputs
 
          (1) clockwise, type=bool default=False
@@ -240,6 +240,7 @@ class A4988Nema(object):
 
         """
         # setup GPIO
+        print(type(self.direction_pin))
         GPIO.setup(self.direction_pin, GPIO.OUT)
         GPIO.setup(self.step_pin, GPIO.OUT)
         GPIO.output(self.direction_pin, clockwise)

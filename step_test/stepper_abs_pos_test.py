@@ -1,7 +1,7 @@
-import sys
-import time
+#import sys
+#import time
 #from RpiMotorLib import A4988Nema
-import RpiMotorLib
+#import RpiMotorLib
 from stepper_abs_pos import StepperAbsPos as StepperAbsPos
 
 ## demo instance, dummy: ##
@@ -12,6 +12,7 @@ step__pin = 26
 mode__pins = (25,26,27)
 stepper__position = 0
 
+print(type(direction__pin))
 stepper = StepperAbsPos(direction__pin, step__pin, mode__pins, stepper__position, "A4988")
 
 # #test absolute position change
@@ -31,7 +32,6 @@ step_delay = .005
 init_delay = .005
 
 print(1)
-stepper.abs_motor_go(50, step_type, step_delay, init_delay)
 print(stepper)
 print('')
 
@@ -45,27 +45,27 @@ stepper.abs_motor_go(50, step_type, step_delay, init_delay)
 print(stepper)
 print('')
 
-print(4)
-stepper.abs_motor_go(70, step_type, step_delay, init_delay)
-print(stepper)
-print('')
-
-print(5)
-stepper.abs_motor_go(180, step_type, step_delay, init_delay)
-print(stepper)
-print('')
-
-print(6)
-stepper.abs_motor_go(5, step_type, step_delay, init_delay)
-print(stepper)
-print('')
-
-print(7)
-stepper.abs_motor_go(0, step_type, step_delay, init_delay)
-print(stepper)
-print('')
-
-print(8)
-stepper.abs_motor_go(100, step_type, step_delay, init_delay, 1)
-print(stepper)
-print('')
+#print(4)
+#stepper.abs_motor_go(70, step_type, step_delay, init_delay)
+#print(stepper)
+#print('')
+#
+#print(5)
+#stepper.abs_motor_go(180, step_type, step_delay, init_delay)
+#print(stepper)
+#print('')
+#
+#print(6)
+#stepper.abs_motor_go(5, step_type, step_delay, init_delay)
+#print(stepper)
+#print('')
+#
+#print(7)
+#stepper.abs_motor_go(0, step_type, step_delay, init_delay)
+#print(stepper)
+#print('')
+#
+#print(8)
+#stepper.abs_motor_go(100, step_type, step_delay, init_delay, 1)
+#print(stepper)
+#print('')
