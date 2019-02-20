@@ -33,7 +33,7 @@ count = 0
 while count < 5:
     ## control variables for motor_go method
     rev_direction = True # bool value, default is False - true makes it go clockwise
-    step_type = '1/8' # string, options are Full, Half, 1/4, 1/8, or 1/16
+    step_type = 'Full' # string, options are Full, Half, 1/4, 1/8, or 1/16
     steps = int(200) # int of how many steps to take in command, default is 1 rev - 1 rev = 200
     step_delay = .001 # float value  of pause inbetween steps (in seconds) - .05 is default (and 
     # sounds reasonable)
