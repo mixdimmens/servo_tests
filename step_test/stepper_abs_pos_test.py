@@ -7,13 +7,17 @@ from stepper_abs_pos import StepperAbsPos as StepperAbsPos
 ## demo instance, dummy: ##
 
 # #fill in the blanks:
-direction__pin = 19
-step__pin = 26
-mode__pins = (25,26,27)
-stepper__position = 0
 
-print(type(direction__pin))
-stepper = StepperAbsPos(direction__pin, step__pin, mode__pins, stepper__position, "A4988")
+ms1 = 11 # gpio pin to ms1 on A4988
+ms2 = 9 # gpio pin to ms2 on A4988
+ms3 = 10 # gpio pin to ms3 on A4988
+direction = 26 # connect to direction pin on A4988
+step = 19 # connect to step pin on A4988
+step_control_pins = (ms1, ms2, ms3) # needs a list (or array apparently) to put into 
+stepper_pos = 0
+
+#print(type(direction__pin))
+stepper = StepperAbsPos(direction, step, step_control_pins, "A4988")
 
 # #test absolute position change
 # stepper.abs_position(635, False)
@@ -35,6 +39,7 @@ print(1)
 print(stepper)
 print('')
 
+# no movement - need to debug
 print(2)
 stepper.abs_motor_go(100, step_type, step_delay, init_delay)
 print(stepper)

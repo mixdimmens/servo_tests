@@ -190,7 +190,6 @@ class A4988Nema(object):
         self.mode_pins = mode_pins
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
-        print(type(self.direction_pin))
 
     def resolution_set(self, steptype):
         """ method to calculate step resolution
@@ -240,7 +239,7 @@ class A4988Nema(object):
 
         """
         # setup GPIO
-        print(type(self.direction_pin))
+#        print(type(self.direction_pin))
         GPIO.setup(self.direction_pin, GPIO.OUT)
         GPIO.setup(self.step_pin, GPIO.OUT)
         GPIO.output(self.direction_pin, clockwise)
@@ -265,6 +264,9 @@ class A4988Nema(object):
             print(sys.exc_info()[0])
             print(motor_error)
             print("RpiMotorLib  : Unexpected error:")
+        except AttributeError:
+            print('what the hell?')
+            pass
         else:
             # print report status
             if verbose:
