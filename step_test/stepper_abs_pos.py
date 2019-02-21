@@ -23,15 +23,13 @@
 from RpiMotorLib import A4988Nema as A4988Nema
 
 class StepperAbsPos(A4988Nema):
+    stepper_position = 0
+    direction = True
 #class StepperAbsPos: # for debugging the class, yo
     # note stepper_position must preceed motor_type or sepper _ will default to <str> type
-    def __init__(self, direction_pin, step_pin, mode_pins, stepper_position = 0, motor_type="A4988"):
-        super().__init__(direction_pin, step_pin, mode_pins, motor_type='A4988')
-#        self.motor_type = motor_type
-#        self.direction_pin = direction_pin
-#        self.step_pin = step_pin
-#        self.mode_pins = mode_pins
-        self.stepper_position = stepper_position
+    def __init__(self, direction_pin, step_pin, mode_pins, motor_type):
+        super().__init__(direction_pin, step_pin, mode_pins, motor_type)
+#        self.stepper_position = stepper_position
         
         #debuggin' it B)
 #        GPIO.setmode(GPIO.BCM)
@@ -50,7 +48,7 @@ class StepperAbsPos(A4988Nema):
     def abs_position(self, steps, direction):
         steps_per_rev = 200
         self.steps = steps
-        self.direction = direction
+#        self.direction = direction
         if self.stepper_position > steps_per_rev:
             print('problem! motor position is {}, which is greater than the number of steps per revolution ({})'.format(self.stepper_position, steps_per_rev))
         else:
@@ -91,6 +89,7 @@ class StepperAbsPos(A4988Nema):
         self.extra_revs = extra_revs
         inner_steps = 0
         outer_steps = 0
+        print(type(self.direction_pin))
 
         if self.stepper_position > self.end_position:
             inner_steps = self.stepper_position - self.end_position
@@ -119,17 +118,17 @@ class StepperAbsPos(A4988Nema):
             pass
         elif outer_steps == inner_steps and self.extra_revs != 0:
             self.extra_revs = self.extra_revs * 200
-            A4988Nema.motor_go(self.direction, steptype, self.extra_revs, stepdelay, False, initdelay)
+            A4988Nema.motor_go(self.direction, steptype, self.extra_revs, stepdelay, False, initdelay, 0)
             print('moved {} (previous rotation direction)'.format(self.extra_revs))
         elif outer_steps < inner_steps:
             outer_steps += (self.extra_revs * 200)
-            A4988Nema.motor_go(self.direction, steptype, outer_steps, stepdelay, False, initdelay)
+            A4988Nema.motor_go(self.direction, steptype, outer_steps, stepdelay, False, initdelay, 0)
             print('moved {} (outer steps)'.format(outer_steps))
             self.abs_position(outer_steps, self.direction)
         elif inner_steps < outer_steps:
             inner_steps += (self.extra_revs * 200)
-#            print(type(self.direction))
-            A4988Nema.motor_go(self.direction, steptype, inner_steps, stepdelay, False, initdelay)
+            print(self.direction_pin)
+            A4988Nema.motor_go(self.direction, steptype, inner_steps, stepdelay, False, initdelay, 0)
             print('moved {} (inner steps)'.format(inner_steps))
             self.abs_position(inner_steps, self.direction)
 
