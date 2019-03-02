@@ -1,8 +1,5 @@
-#import sys
-#import time
-#from RpiMotorLib import A4988Nema
-#import RpiMotorLib
-from stepper_abs_pos import StepperAbsPos as StepperAbsPos
+import stepper_abs_pos
+import RpiMotorLib
 
 ## demo instance, dummy: ##
 
@@ -16,8 +13,22 @@ step = 19 # connect to step pin on A4988
 step_control_pins = (ms1, ms2, ms3) # needs a list (or array apparently) to put into 
 stepper_pos = 0
 
+## confirm A4988Nema classworks independently:
+
+
+stepper_tester = RpiMotorLib.A4988Nema(direction, step, step_control_pins, 'A4988')
+
+stepper_tester.motor_go()
+#except AttributeError:
+#    print("it's not working, yo! wtf?")
+#except NameError:
+#    print("now we're really confused")
+#else:
+#    print("it's wworking here!")
+
+
 #print(type(direction__pin))
-stepper = StepperAbsPos(direction, step, step_control_pins, "A4988")
+stepper = stepper_abs_pos.StepperAbsPos(direction, step, step_control_pins, "A4988")
 
 # #test absolute position change
 # stepper.abs_position(635, False)
@@ -35,11 +46,12 @@ step_type = 'Half'
 step_delay = .005
 init_delay = .005
 
+#try:
 print(1)
 print(stepper)
 print('')
 
-# no movement - need to debug
+    # no movement - need to debug
 print(2)
 stepper.abs_motor_go(100, step_type, step_delay, init_delay)
 print(stepper)
@@ -49,6 +61,10 @@ print(3)
 stepper.abs_motor_go(50, step_type, step_delay, init_delay)
 print(stepper)
 print('')
+#except AttributeError:
+#    print("we're still getting this fucking error, wtf?")
+#else:
+#    print("well, it's working now for an unkown reason")
 
 #print(4)
 #stepper.abs_motor_go(70, step_type, step_delay, init_delay)
