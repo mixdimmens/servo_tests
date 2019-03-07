@@ -75,20 +75,34 @@ class StepperAbsPos(A4988Nema):
             self.opposing_pole = self.stepper_position - 100
         return self.opposing_pole
 
+
     def abs_motor_go(self, end_position, steptype, stepdelay, initdelay, extra_revs = 0):
         self.end_position = end_position
         self.extra_revs = extra_revs
         inner_steps = 0
         outer_steps = 0
+        steps_per_rev = 200
         print(type(self.direction_pin))
+
+        ## automatic steptype compensation :P
+        if steptype == "Full":
+            steps_per_rev = 200
+        elif steptype == 'Half':
+            steps_per_rev = 400
+        elif steptype == '1/4':
+            steps_per_rev = 800
+        elif steptype == '1/8':
+            steps_per_rev = 1600
+        elif steptype == '1/16':
+            steps_per_rev = 3200
 
         if self.stepper_position > self.end_position:
             inner_steps = self.stepper_position - self.end_position
-            outer_steps = (200 - self.stepper_position) + self.end_position
+            outer_steps = (steps_per_rev - self.stepper_position) + self.end_position
             print('inner steps {}, outer steps {}'.format(inner_steps, outer_steps))
         elif self.end_position > self.stepper_position:
             inner_steps = self.end_position - self.stepper_position
-            outer_steps = (200 - self.end_position) + self.stepper_position
+            outer_steps = (steps_per_rev - self.end_position) + self.stepper_position
             print('inner steps {}, outer steps {}'.format(inner_steps, outer_steps))
 
         if inner_steps == outer_steps:
@@ -108,16 +122,16 @@ class StepperAbsPos(A4988Nema):
         if outer_steps == inner_steps and self.extra_revs == 0:
             pass
         elif outer_steps == inner_steps and self.extra_revs != 0:
-            self.extra_revs = self.extra_revs * 200
+            self.extra_revs = self.extra_revs * steps_per_rev
             self.motor_go(self.direction, steptype, self.extra_revs, stepdelay, False, initdelay)
             print('moved {} (previous rotation direction)'.format(self.extra_revs))
         elif outer_steps < inner_steps:
-            outer_steps += (self.extra_revs * 200)
+            outer_steps += (self.extra_revs * steps_per_rev)
             self.motor_go(self.direction, steptype, outer_steps, stepdelay, False, initdelay)
             print('moved {} (outer steps)'.format(outer_steps))
             self.abs_position(outer_steps, self.direction)
         elif inner_steps < outer_steps:
-            inner_steps += (self.extra_revs * 200)
+            inner_steps += (self.extra_revs * steps_per_rev)
             print(self.direction_pin)
             self.motor_go(self.direction, steptype, inner_steps, stepdelay, False, initdelay)
             print('moved {} (inner steps)'.format(inner_steps))
