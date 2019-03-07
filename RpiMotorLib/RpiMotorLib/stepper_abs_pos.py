@@ -30,16 +30,6 @@ class StepperAbsPos(A4988Nema):
     # note stepper_position must preceed motor_type or sepper _ will default to <str> type
     def __init__(self, direction_pin, step_pin, mode_pins, motor_type):
         super().__init__(direction_pin, step_pin, mode_pins, motor_type)
-#        self.stepper_position = stepper_position
-        
-        #debuggin' it B)
-#        GPIO.setmode(GPIO.BCM)
-#        GPIO.setwarnings(False)
-        # self.stepper_position = int(self.stepper_position)
-        # print(type(self.stepper_position))
-        
-        
-        
 
     ## method golbal zeroes stepper absolute position
     def new_home(self):
@@ -135,56 +125,4 @@ class StepperAbsPos(A4988Nema):
 
     def __repr__(self):
         return "abs pos: {}".format(self.stepper_position)
-
-
-#direction__pin = 19
-#step__pin = 26
-#mode__pins = (25,26,27)
-#stepper__position = 0
-#
-#stepper = StepperAbsPos(direction__pin, step__pin, mode__pins, stepper__position, "A4988")
-
-#step_type = 'Half'
-#step_delay = .005
-#init_delay = .005
-#
-#print(1)
-#stepper.abs_motor_go(50, step_type, step_delay, init_delay)
-#print(stepper)
-#print('')
-#
-#print(2)
-#stepper.abs_motor_go(100, step_type, step_delay, init_delay)
-#print(stepper)
-#print('')
-
-#print(3)
-#stepper.abs_motor_go(50, step_type, step_delay, init_delay)
-#print(stepper)
-#print('')
-#
-#print(4)
-#stepper.abs_motor_go(70, step_type, step_delay, init_delay)
-#print(stepper)
-#print('')
-#
-#print(5)
-#stepper.abs_motor_go(180, step_type, step_delay, init_delay)
-#print(stepper)
-#print('')
-#
-#print(6)
-#stepper.abs_motor_go(5, step_type, step_delay, init_delay)
-#print(stepper)
-#print('')
-#
-#print(7)
-#stepper.abs_motor_go(0, step_type, step_delay, init_delay)
-#print(stepper)
-#print('')
-#
-#print(8)
-#stepper.abs_motor_go(100, step_type, step_delay, init_delay, 1)
-#print(stepper)
-#print('')
 
