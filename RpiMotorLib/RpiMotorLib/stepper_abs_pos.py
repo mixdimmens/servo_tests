@@ -109,17 +109,17 @@ class StepperAbsPos(A4988Nema):
             pass
         elif outer_steps == inner_steps and self.extra_revs != 0:
             self.extra_revs = self.extra_revs * 200
-            A4988Nema.motor_go(self.direction, steptype, self.extra_revs, stepdelay, False, initdelay, 0)
+            self.motor_go(self.direction, steptype, self.extra_revs, stepdelay, False, initdelay)
             print('moved {} (previous rotation direction)'.format(self.extra_revs))
         elif outer_steps < inner_steps:
             outer_steps += (self.extra_revs * 200)
-            A4988Nema.motor_go(self.direction, steptype, outer_steps, stepdelay, False, initdelay, 0)
+            self.motor_go(self.direction, steptype, outer_steps, stepdelay, False, initdelay)
             print('moved {} (outer steps)'.format(outer_steps))
             self.abs_position(outer_steps, self.direction)
         elif inner_steps < outer_steps:
             inner_steps += (self.extra_revs * 200)
             print(self.direction_pin)
-            A4988Nema.motor_go(self.direction, steptype, inner_steps, stepdelay, False, initdelay, 0)
+            self.motor_go(self.direction, steptype, inner_steps, stepdelay, False, initdelay)
             print('moved {} (inner steps)'.format(inner_steps))
             self.abs_position(inner_steps, self.direction)
 

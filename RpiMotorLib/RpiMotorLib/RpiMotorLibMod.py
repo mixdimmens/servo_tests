@@ -162,7 +162,7 @@ class StepperAbsPos(A4988Nema):
 #class StepperAbsPos: # for debugging the class, yo
     # note stepper_position must preceed motor_type or sepper _ will default to <str> type
     def __init__(self, direction_pin, step_pin, mode_pins, motor_type):
-        super().__init__(direction_pin, step_pin, mode_pins, motor_type)
+        super(A4988Nema).__init__(direction_pin, step_pin, mode_pins, motor_type)
 
     ## method golbal zeroes stepper absolute position
     def new_home(self):
