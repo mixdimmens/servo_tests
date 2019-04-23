@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-import stepper_abs_pos
+from RpiMotorLib import stepper_abs_pos
+# import stepper_abs_pos
 import RpiMotorLib
 
 ms1 = 11 # gpio pin to ms1 on A4988
@@ -19,13 +20,12 @@ pos_lst = [25, 45, 190, 0, 10, 100, 15, 0]
 
 
 while True:
-    try:
-        for pos in pos_lst:
+    for pos in pos_lst:
+        try:
             stepper.abs_motor_go(pos, step_type, step_delay, init_delay)
-#            else:
-#                break
-    except (KeyboardInterrupt, SystemExit):
-        print('nope')
-        print('exiting!')
-        raise
+            print(pos)
+        except (KeyboardInterrupt, SystemExit):
+            print('nope')
+            print('exiting!')
+            raise
         
