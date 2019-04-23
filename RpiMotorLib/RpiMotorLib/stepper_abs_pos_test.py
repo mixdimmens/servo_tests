@@ -16,9 +16,9 @@ stepper_pos = 0
 ## confirm A4988Nema classworks independently:
 
 
-stepper_tester = RpiMotorLib.A4988Nema(direction, step, step_control_pins, 'A4988')
-
-stepper_tester.motor_go()
+#stepper_tester = RpiMotorLib.A4988Nema(direction, step, step_control_pins, 'A4988')
+#
+#stepper_tester.motor_go()
 #except AttributeError:
 #    print("it's not working, yo! wtf?")
 #except NameError:
@@ -66,27 +66,32 @@ print('')
 #else:
 #    print("well, it's working now for an unkown reason")
 
-#print(4)
-#stepper.abs_motor_go(70, step_type, step_delay, init_delay)
-#print(stepper)
-#print('')
-#
-#print(5)
-#stepper.abs_motor_go(180, step_type, step_delay, init_delay)
-#print(stepper)
-#print('')
-#
-#print(6)
-#stepper.abs_motor_go(5, step_type, step_delay, init_delay)
-#print(stepper)
-#print('')
-#
-#print(7)
-#stepper.abs_motor_go(0, step_type, step_delay, init_delay)
-#print(stepper)
-#print('')
-#
-#print(8)
-#stepper.abs_motor_go(100, step_type, step_delay, init_delay, 1)
-#print(stepper)
-#print('')
+print(4)
+stepper.abs_motor_go(70, step_type, step_delay, init_delay)
+print(stepper)
+print('')
+
+print(5)
+stepper.abs_motor_go(180, step_type, step_delay, init_delay)
+print(stepper)
+print('')
+
+print(6)
+stepper.abs_motor_go(5, step_type, step_delay, init_delay)
+print(stepper)
+print('')
+
+print(7)
+stepper.abs_motor_go(0, step_type, step_delay, init_delay)
+print(stepper)
+print('')
+
+print(8)
+stepper.abs_motor_go(100, step_type, step_delay, init_delay, 1)
+print(stepper)
+print('')
+
+print(9)
+stepper.abs_motor_go(0, step_type, step_delay, init_delay, 1)
+print(stepper)
+print('')

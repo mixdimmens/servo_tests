@@ -7,7 +7,8 @@ import RPi.GPIO as GPIO
 #sys.path.insert(0, '/home/pi/Documents/tech/RpiMotorLib/RpiMotorLib')
 
 
-from RpiMotorLib import RpiMotorLib
+from ..pi/Documents/servo_stepper_tests/servo_tests/RpiMotorLib/RpiMotorLib import RpiMotorLib
+#RpiMotorLib.path['/home/pi/Documents/servo_stepper_tests/servo_tests/RpiMotorLib/RpiMotorLib/RpiMotorLib.py']
 
 # 200 steps full revolution
 # 400 half

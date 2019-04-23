@@ -5,11 +5,11 @@
 # note : uses BCM pin numbers
 
 ## necessary libraries ##
-import sys
+#import sys
 import time
 import RPi.GPIO as GPIO
-#from RpiMotorLib import RpiMotorLib
-import RpiMotorLib
+from RpiMotorLib import RpiMotorLib
+#import RpiMotorLib
 
 
 ## how to set up a motor instance ##
