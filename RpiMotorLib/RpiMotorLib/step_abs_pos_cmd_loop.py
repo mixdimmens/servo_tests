@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-from RpiMotorLib import stepper_abs_pos
-# import stepper_abs_pos
+#from RpiMotorLib import stepper_abs_pos
+import stepper_abs_pos
 import RpiMotorLib
 
 ms1 = 11 # gpio pin to ms1 on A4988
