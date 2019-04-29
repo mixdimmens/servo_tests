@@ -30,7 +30,7 @@ end_angle = int(values[row][0])/200 * 360
 print(end_angle)
 step_end_pos = [end_angle for i in range(200)]
 # print(step_end_pos)
-plots.plot(end_ray, step_end_pos, label= 'end position')
+plots.plot(step_end_pos, end_ray, label= 'end position')
 
 # - start position ray - #
 start_ray = [i for i in range(200)]

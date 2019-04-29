@@ -20,13 +20,14 @@ steptype = 'Full'
 stepdelay = .01
 initdelay = .01
 
-with open('step_simulation.csv', 'w', newline= '') as csvfile:
+with open('step_simulation_2.csv', 'w', newline= '') as csvfile:
     csvwriter = csv.writer(csvfile, delimiter= ',')
     for n in range(cycles):
         testr.abs_motor_go(end_position[n], steptype, stepdelay, initdelay, extra_revs= 0, stepper_position= 0)
         out_list = [end_position[n]]
         for m in testr.to_csv():
             out_list.append(m)
+            print(m)
         csvwriter.writerow(out_list)
         # print(testr)
         # csvwriter.writerow()

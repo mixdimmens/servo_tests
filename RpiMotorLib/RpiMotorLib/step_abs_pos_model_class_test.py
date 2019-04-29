@@ -145,7 +145,7 @@ class StepTest():
             self.abs_position(self.inner_steps, self.direction)
 ### TO HERE ###
     def to_csv(self):
-        csv_lst = [self.inner_steps, self.outer_steps, self.direction, self.extra_revs]
+        csv_lst = [self.inner_steps, self.outer_steps, self.stepper_position, self.direction, self.extra_revs]
         return csv_lst
 
     def __repr__(self):
